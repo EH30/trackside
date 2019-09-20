@@ -2,6 +2,12 @@ import os
 import sys
 import time
 
+""" 
+Educational purpose only
+
+=============================
+Created By: EH
+"""
 file_dir = " "
 dir_name = " "
 
