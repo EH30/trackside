@@ -23,5 +23,8 @@ Run
 git clone https://github.com/EH30/trackside
 cd Trackside
 python trackside.py
-
 ----------------------------
+
+index.html file and saver.php file will be Created in the folder
+You might need to paste the files in your apache directory 
+for linux the directory should be /var/www/ and for windows it should be in the apache folder in htdocs  
