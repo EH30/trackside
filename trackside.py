@@ -147,7 +147,7 @@ def startscript():
             time.sleep(5)
             os.system("cls")
 
-        os.system("start call ngrok http 80")
+        os.system("start call ngrok_win32 http 80")
         file_dir = dir_name + "/save.txt"
         os.system("cls")
 
