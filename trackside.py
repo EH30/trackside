@@ -100,7 +100,7 @@ def cpaste_linux():
             opnr.close()
             
             filename = "saver.php"
-            writename = "/var/www/htmlsaver.php"
+            writename = "/var/www/html/saver.php"
     except FileNotFoundError:
         return 1
 
@@ -139,7 +139,7 @@ def startscript():
     if check_system() == "linux":
         cpaste_linux()
         if cpaste_linux == 1:
-            print("\033[1;32m move index.html and saver.php to /var/www/ in apache2 \033[1;m")
+            print("\033[1;32m move index.html and saver.php to /var/www/html in apache2 \033[1;m")
             time.sleep(5)
             os.system("apache2 start")
             os.system("clear")
