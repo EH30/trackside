@@ -89,7 +89,7 @@ def listener(files):
 def cpaste_linux():
     try:
         filename = "index.html"
-        writename = "index.html"
+        writename = "/var/www/html/index.html"
         for i in range(0, 2):
             opnr = open(filename, "r")
             data = opnr.read()
@@ -100,7 +100,7 @@ def cpaste_linux():
             opnr.close()
             
             filename = "saver.php"
-            writename = "saver.php"
+            writename = "/var/www/htmlsaver.php"
     except FileNotFoundError:
         return 1
 
@@ -143,7 +143,7 @@ def startscript():
             time.sleep(5)
             os.system("apache2 start")
             os.system("clear")
-        file_dir = "/var/www/save.txt"
+        file_dir = "/var/www/html/save.txt"
         os.system("clear")
     
     elif check_system() == "win32":
