@@ -1,6 +1,9 @@
 import os
 import sys
-import time
+import time 
+import shutil
+import re
+
 
 """ 
 Educational purpose only
@@ -12,6 +15,10 @@ file_dir = " "
 dir_name = " "
 html_image = " "
 
+image_clean1 = " "
+image_clean2 = " "
+
+
 def check_system():
     if sys.platform == "linux" or sys.platform == "linux2":
         os.system("clear")
@@ -21,7 +28,7 @@ def check_system():
         return "win32"
 
 def htmls_clientside(user):
-    global html_image
+    global html_image, image_clean1, image_clean2
 
     if user == "y":
         html_title = str(input("\033[1;32m webpage title: \033[1;m"))
@@ -37,7 +44,11 @@ def htmls_clientside(user):
         html_px2 = "1600"
     else:
         print("\033[1;36m ERROR \033[1;m")
-         
+
+    image_clean1 = re.sub(r'.*/', '', html_image)
+    image_clean2 = re.sub(r'.*\\', '', image_clean1)
+
+
     indexfile = """ 
 
 <!DOCTYPE html>
@@ -69,10 +80,12 @@ def htmls_clientside(user):
         </script>
     </body>
 </html>
-    """%(html_title, html_image.strip(" F : f \ /"), html_px1, html_px2, html_h1)
+    """%(html_title, image_clean2, html_px1, html_px2, html_h1)
     opnr = open("index.html", "w")
     opnr.write(indexfile)
     opnr.close()
+
+
 
 def server_side():
     
@@ -147,27 +160,6 @@ def cpaste_windows():
 
     return 0
 
-def cpaste_image():
-    global dir_name, file_dir
-
-    try:
-        filename = html_image
-        if check_system() == "win32":
-            write_file = dir_name + "/" + filename.strip("f F : / \ ")
-        else:
-            write_file = "/var/www/html/" + filename
-        
-        opnr = open(filename, "rb")
-        data = opnr.read()
-        opnr.close()
-
-        opnr = open(write_file, "wb")
-        opnr.write(data)
-        opnr.close()
-    except FileNotFoundError:
-        return 1
-
-    return 0
 
 def startscript():
     check_system()
@@ -195,8 +187,14 @@ def startscript():
         os.system("start call ngrok_win32 http 80")
         file_dir = dir_name + "/save.txt"
         os.system("cls")
+
     
-    cpaste_image()
+    if check_system() == "win32":
+        shutil.copy(html_image, dir_name)
+    else:
+        shutil.copy(html_image, "/var/www/html")
+
+    #cpaste_image()
     check_system()
 
 if __name__ == "__main__":
