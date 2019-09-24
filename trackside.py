@@ -57,10 +57,12 @@ def htmls_clientside(user):
         <title>%s</title>
         <style type="text/css">
             body {
-            background-image: url("%s");
-            background-size: %spx %spx;
-            background-repeat: no-repeat;
-        }
+                background-image: url("%s");
+                background-size: %spx %spx;
+                background-repeat: no-repeat;
+                background-position-y: 100px;
+                background-position-x: 10px;
+            }
         </style>
     </head>
 
