@@ -27,4 +27,4 @@ python trackside.py
 
 index.html file and saver.php file will be Created in the folder
 You might need to paste the files in your apache directory 
-for linux the directory should be /var/www/ and for windows it should be in the apache folder in htdocs  
+for linux the directory should be /var/www/html and for windows it should be in the apache folder in htdocs  
